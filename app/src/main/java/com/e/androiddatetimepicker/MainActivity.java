@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 
@@ -42,13 +43,19 @@ public class MainActivity extends AppCompatActivity implements DatePickerDialog.
 
         DatePickerDialog datePickerDialog =new DatePickerDialog(
                 this, this, year, month, day);
+        datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+        datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis() + 172800000);
                 datePickerDialog.show();
 
     }
 
     @Override
     public void onDateSet (DatePicker view, int year, int month, int dayOfMonth) {
-        String date = "Month/Day/Year: " + month + "/" + dayOfMonth + "/" + year;
+        SimpleDateFormat format = new SimpleDateFormat("dd MMMM yyyy");
+        Calendar c = Calendar.getInstance();
+        c.set(year, month, dayOfMonth);
+
+        String date = format.format(c.getTime());
         tvDOB.setText(date);
 
 
